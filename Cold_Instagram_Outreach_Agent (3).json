@@ -1,0 +1,1357 @@
+{
+  "name": "Cold Instagram Outreach Agent",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        420,
+        540
+      ],
+      "id": "332d66a9-e25e-4fe9-b6c3-014f62559536",
+      "name": "When clicking ‘Test workflow’",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Telegram Trigger').item.json.message.chat.id }}",
+        "text": "Request Has Been Sent",
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1380,
+        180
+      ],
+      "id": "3c5ef165-e1a5-4da7-b1d9-0c57ec9891c6",
+      "name": "Telegram",
+      "webhookId": "970b9d49-b4b0-4c1c-b568-291cad8b100a",
+      "credentials": {
+        "telegramApi": {
+          "id": "JkXUgHxEdKAVQYGX",
+          "name": "Test Skool"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Telegram Trigger').item.json.message.chat.id }}",
+        "text": "Starting Filtration Tasks",
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        2040,
+        60
+      ],
+      "id": "4570684f-82d0-4b3c-ad06-1206d2e2bbbb",
+      "name": "Telegram1",
+      "webhookId": "970b9d49-b4b0-4c1c-b568-291cad8b100a",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "model": "openai/chatgpt-4o-latest",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        3800,
+        220
+      ],
+      "id": "2839fddc-cd98-4441-ac05-348b7493f738",
+      "name": "OpenRouter Chat Model",
+      "credentials": {
+        "openRouterApi": {
+          "id": "HUdC158Hx1AOFjLd",
+          "name": "Vas"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        380,
+        100
+      ],
+      "id": "db97b4cb-4c15-41de-a35e-0d641c97f8c1",
+      "name": "OpenRouter Chat Model1",
+      "credentials": {
+        "openRouterApi": {
+          "id": "HUdC158Hx1AOFjLd",
+          "name": "Vas"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "batchSize": 5,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        3580,
+        -60
+      ],
+      "id": "e9169b6a-0319-405b-966a-8013bb7a1462",
+      "name": "Loop Over Items"
+    },
+    {
+      "parameters": {
+        "updates": [
+          "message"
+        ],
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegramTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        -140,
+        240
+      ],
+      "id": "5b2d0d74-24c0-4dca-9805-2496a71b0a2e",
+      "name": "Telegram Trigger",
+      "webhookId": "32209277-ad41-42c5-a8c6-46c8bb95e4e9",
+      "credentials": {
+        "telegramApi": {
+          "id": "JkXUgHxEdKAVQYGX",
+          "name": "Test Skool"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "d2c08622-a34b-44e2-ae63-d0f3b9f20148",
+              "name": "IG",
+              "value": "={{ $json.output.IG }}",
+              "type": "string"
+            },
+            {
+              "id": "93164ffb-443d-425e-90ef-9be75545433f",
+              "name": "API",
+              "value": "INSERT YOUR PARSER.IM API HERE",
+              "type": "string"
+            },
+            {
+              "id": "df0e0067-e744-44e0-a3ff-fafe3b852347",
+              "name": "Limit",
+              "value": "={{ $json.output.Limit }}",
+              "type": "string"
+            },
+            {
+              "id": "1849e992-45e2-4e48-9b11-38440221b052",
+              "name": "Keywords",
+              "value": "Coach, Mentor, Instructor, Expert",
+              "type": "string"
+            },
+            {
+              "id": "0b3df0d0-6411-47a5-bcf2-a5722da55ae1",
+              "name": "Minimum subscribers",
+              "value": "5000",
+              "type": "string"
+            },
+            {
+              "id": "48c1e845-432f-4675-bb82-02c16530f231",
+              "name": "Maximum Subscribers",
+              "value": "",
+              "type": "string"
+            },
+            {
+              "id": "d2dad581-b0c8-48f1-bd97-59d4477cadb6",
+              "name": "Exact match",
+              "value": false,
+              "type": "boolean"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        720,
+        180
+      ],
+      "id": "2f2669bf-5d07-4a69-a15d-d00250f21bb9",
+      "name": "SET VARIABLES"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Get input variables from the previous node\nconst ig = $input.first().json.IG; // Instagram account or source\nconst apiKey = $input.first().json.API; // API key\nconst limit = $input.first().json.Limit; // Limit for the task\n\n// Define the API endpoint\nconst apiUrl = \"https://parser.im/api.php\";\n\n// Define the query parameters\nconst queryParams = {\n  key: apiKey, // API key for authentication\n  mode: \"create\", // Create a new task\n  type: \"p1\", // Task type: data collection\n  act: \"1\", // Required value for the task\n  name: `${ig} ${limit}`, // Dynamic task name based on IG input\n  links: ig, // The Instagram account or source to scrape\n  spec: \"2\", // Collecting links (logins)\n  limit: limit // Task limit (maximum number of accounts to process)\n};\n\n// Convert query parameters to a query string\nconst queryString = Object.entries(queryParams)\n  .map(([key, value]) => `${encodeURIComponent(key)}=${encodeURIComponent(value)}`)\n  .join(\"&\");\n\n// Construct the full URL\nconst fullUrl = `${apiUrl}?${queryString}`;\n\n// Return the URL for use in the next node\nreturn {\n  url: fullUrl\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        940,
+        180
+      ],
+      "id": "e1db48aa-0e93-4e59-8944-625cd7e879fb",
+      "name": "CREATE GET REQUEST URL"
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.url }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1160,
+        180
+      ],
+      "id": "8881e652-1ed6-4993-b949-ef209197859d",
+      "name": "SEND SCRAPING REQUEST TO PARSER.IM"
+    },
+    {
+      "parameters": {
+        "url": "=https://parser.im/api.php?key={{ $('SET VARIABLES').item.json.API }}&mode=status&tid={{ $json.tid }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1600,
+        180
+      ],
+      "id": "71372892-661f-47f6-b033-36fe545ea9cf",
+      "name": "CHECK SCRAPING REQUEST STATUS"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Get input variables from the previous node\nconst apiKey = $('SET VARIABLES').first().json.API; // API key\nconst ig = $('SET VARIABLES').first().json.IG; // Instagram account or source\nconst bioKeyword = $('SET VARIABLES').first().json.Keywords || \"\"; // Keywords for bio filtering (default: empty string)\nconst minSubscribers = $('SET VARIABLES').first().json['Minimum subscribers']; // Minimum number of subscribers (undefined if not provided)\nconst maxSubscribers = $('SET VARIABLES').first().json['Maximum Subscribers']; // Maximum number of subscribers (undefined if not provided)\nconst taskId = $('SEND SCRAPING REQUEST TO PARSER.IM').first().json.tid; // Task ID to filter\nconst exactMatch = $('SET VARIABLES').first().json['Exact match']; // Boolean variable to determine match type\n\n// Format the keywords to remove spaces\nconst formattedKeywords = bioKeyword.replace(/\\s+/g, \"\"); // Remove all spaces\n\n// Define the task name dynamically\nconst taskName = `Filter-${ig}-BIO ${formattedKeywords}-MinSubscribers ${minSubscribers || 0}-MaxSubscribers ${maxSubscribers || 0}`;\n\n// Define the API endpoint\nconst apiUrl = \"https://parser.im/api.php\";\n\n// Define the query parameters\nconst queryParams = {\n  key: apiKey, // API key for authentication\n  mode: \"create\", // Create a new task\n  type: \"f1\", // Task type for account filtering\n  name: taskName, // Dynamic task name\n  links: taskId, // Task ID to filter\n  spec: \"2\", // Collect only logins (exclude IDs)\n  dop: \"3,6,8\", // Include name (3), description (6), and number of subscribers (8)\n  private: \"1\", // Filter only open accounts\n};\n\n// Add `followers1` (minimum subscribers) only if it is provided\nif (minSubscribers !== undefined) {\n  queryParams.followers1 = minSubscribers; // Minimum number of subscribers\n}\n\n// Add `followers2` (maximum subscribers) only if it is provided\nif (maxSubscribers !== undefined) {\n  queryParams.followers2 = maxSubscribers; // Maximum number of subscribers\n}\n\n// Add bio filtering only if keywords are provided\nif (formattedKeywords) {\n  queryParams.white_bio = formattedKeywords; // Filter accounts with keywords in bio\n  queryParams.white_bio_match = exactMatch ? \"0\" : \"1\"; // Use exact match or inaccurate match based on the boolean variable\n}\n\n// Convert query parameters to a query string\nconst queryString = Object.entries(queryParams)\n  .map(([key, value]) => `${encodeURIComponent(key)}=${encodeURIComponent(value)}`)\n  .join(\"&\");\n\n// Construct the full URL\nconst fullUrl = `${apiUrl}?${queryString}`;\n\n// Return the URL for use in the next node\nreturn {\n  url: fullUrl\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2260,
+        60
+      ],
+      "id": "5585efe4-d67a-43e0-a341-25a5f0446794",
+      "name": "CREATE FILTERING REQUEST URL"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $json.url }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2480,
+        60
+      ],
+      "id": "0fcd357f-3d0d-4327-8a7b-10d883deabdf",
+      "name": "SEND FILTERING REQUEST TO PARSER.IM"
+    },
+    {
+      "parameters": {
+        "url": "=https://parser.im/api.php?key={{ $('SET VARIABLES').item.json.API }}&mode=status&tid={{ $json.tid }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2700,
+        60
+      ],
+      "id": "715cae99-a6ae-4093-bfb5-e7e2356c720b",
+      "name": "CHECK FILTERING REQUEST STATUS"
+    },
+    {
+      "parameters": {
+        "url": "=https://parser.im/api.php?key={{ $('SET VARIABLES').item.json.API }}&mode=result&tid={{ $('CHECK FILTERING REQUEST STATUS').item.json.tid }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        3140,
+        -60
+      ],
+      "id": "a5bdcde1-9399-4d21-bc30-b48a075c996b",
+      "name": "GET SCRAPED / FILTERED DAYA FROM PARSER.IM"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Get the raw data from the input\nconst rawData = $input.first().json.data;\n\n// Split the data into rows\nconst rows = rawData.split('\\n').filter(row => row.trim() !== '');\n\n// Remove original headers\nrows.shift();\n\n// Define new headers\nconst headers = ['handle', 'followers', 'name', 'bio'];\n\n// Map each row to an object with new headers\nconst result = rows.map(row => {\n  const cols = row.split(':');\n  return {\n    handle: cols[0],\n    followers: Number(cols[1]),\n    name: cols[2],\n    bio: cols.slice(3).join(':').trim()\n  };\n});\n\n// Return structured data in n8n format with item linking\nreturn result.map(item => ({\n  json: item,\n  pairedItem: { item: 0 }\n}));"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        3360,
+        -60
+      ],
+      "id": "592833d0-4db7-432a-8d03-608d5bb9247e",
+      "name": "ORGANISE DATA"
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "1iqlfJLZNxk644buLP1ydXNu-2kn03ZUkoPLHjvy0Eq8",
+          "mode": "list",
+          "cachedResultName": "INSTAGRAM CRM",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1iqlfJLZNxk644buLP1ydXNu-2kn03ZUkoPLHjvy0Eq8/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "CRM",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1iqlfJLZNxk644buLP1ydXNu-2kn03ZUkoPLHjvy0Eq8/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Contacted": "NO",
+            "URL": "=https://instagram.com/{{ $('ORGANISE DATA').item.json.handle }}",
+            "Message": "={{ $json.output }}",
+            "Handle": "={{ $('ORGANISE DATA').item.json.handle }}"
+          },
+          "matchingColumns": [
+            "Handle"
+          ],
+          "schema": [
+            {
+              "id": "Handle",
+              "displayName": "Handle",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "URL",
+              "displayName": "URL",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Message",
+              "displayName": "Message",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Contacted",
+              "displayName": "Contacted",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        3920,
+        -220
+      ],
+      "id": "3591fe3c-4dc2-4cf8-9e54-05f7ac249b38",
+      "name": "ADD PROSPECTS TO CRM",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "ynWrZD3qiP72GIu9",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "1iqlfJLZNxk644buLP1ydXNu-2kn03ZUkoPLHjvy0Eq8",
+          "mode": "list",
+          "cachedResultName": "INSTAGRAM CRM",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1iqlfJLZNxk644buLP1ydXNu-2kn03ZUkoPLHjvy0Eq8/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 90134270,
+          "mode": "list",
+          "cachedResultName": "DAILY OUTREACH",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1iqlfJLZNxk644buLP1ydXNu-2kn03ZUkoPLHjvy0Eq8/edit#gid=90134270"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Handle": "={{ $('ORGANISE DATA').item.json.handle }}",
+            "Contacted": "NO",
+            "URL": "=https://instagram.com/{{ $('ORGANISE DATA').item.json.handle }}",
+            "Message": "={{ $json.Message }}"
+          },
+          "matchingColumns": [
+            "Handle"
+          ],
+          "schema": [
+            {
+              "id": "Handle",
+              "displayName": "Handle",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "URL",
+              "displayName": "URL",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Message",
+              "displayName": "Message",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Contacted",
+              "displayName": "Contacted",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        4400,
+        -220
+      ],
+      "id": "2fe6d08c-a0f1-426c-ac31-9136a0282275",
+      "name": "ADD PROSPECTS TO DAILY CRM",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "ynWrZD3qiP72GIu9",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "maxItems": 50
+      },
+      "type": "n8n-nodes-base.limit",
+      "typeVersion": 1,
+      "position": [
+        4180,
+        -220
+      ],
+      "id": "5914fea0-9ade-470a-8519-b2be90fecf4f",
+      "name": "SET LIMIT FOR DAILY CRM PROSPECTS"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.limit",
+      "typeVersion": 1,
+      "position": [
+        4620,
+        -220
+      ],
+      "id": "06234965-6815-486d-bc81-f16ea5865764",
+      "name": "LIMIT TELEGRAM RESPONSES TO ONE"
+    },
+    {
+      "parameters": {
+        "amount": 90
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        4200,
+        260
+      ],
+      "id": "047f60e9-b198-456f-9b86-5dd13c628e74",
+      "name": "WAIT TO AVOID API BURNOUT",
+      "webhookId": "5182fc12-d991-446c-bc4b-6974343f8d23",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "amount": 90
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        3140,
+        160
+      ],
+      "id": "4c931a9c-191c-444a-b26f-dbda6d4d9cf4",
+      "name": "WAIT FOR REQUEST TO FINISH / RETRY 2",
+      "webhookId": "f3f9dd22-d45f-4675-b7b7-1d08e91c4636"
+    },
+    {
+      "parameters": {
+        "amount": 90
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        2040,
+        280
+      ],
+      "id": "69c6f992-26c8-472f-92f5-79c428bf5671",
+      "name": "WAIT FOR REQUEST TO FINISH / RETRY 1",
+      "webhookId": "f3f9dd22-d45f-4675-b7b7-1d08e91c4636"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "18443f77-25ae-49a3-af2f-0845f991f9f0",
+              "leftValue": "={{ $json.tid_status }}",
+              "rightValue": "completed",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1820,
+        100
+      ],
+      "id": "d79cc5ad-1fef-4050-a663-e126e3316cda",
+      "name": "IF 1"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "18443f77-25ae-49a3-af2f-0845f991f9f0",
+              "leftValue": "={{ $json.tid_status }}",
+              "rightValue": "completed",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        2920,
+        -20
+      ],
+      "id": "9385a30d-3c44-4884-8709-dba855e8295d",
+      "name": "IF 2"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1iqlfJLZNxk644buLP1ydXNu-2kn03ZUkoPLHjvy0Eq8",
+          "mode": "list",
+          "cachedResultName": "INSTAGRAM CRM",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1iqlfJLZNxk644buLP1ydXNu-2kn03ZUkoPLHjvy0Eq8/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "CRM",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1iqlfJLZNxk644buLP1ydXNu-2kn03ZUkoPLHjvy0Eq8/edit#gid=0"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        420,
+        340
+      ],
+      "id": "a544cbab-322c-4c7a-9771-0f5787a571ac",
+      "name": "READ CRM",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "ynWrZD3qiP72GIu9",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "maxItems": 50
+      },
+      "type": "n8n-nodes-base.limit",
+      "typeVersion": 1,
+      "position": [
+        720,
+        460
+      ],
+      "id": "39160eaf-e745-476b-916c-9192666efe50",
+      "name": "LIMIT FOR HOW MANY USERS TO BE ADDED TO DAILY CRM"
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "1iqlfJLZNxk644buLP1ydXNu-2kn03ZUkoPLHjvy0Eq8",
+          "mode": "list",
+          "cachedResultName": "INSTAGRAM CRM",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1iqlfJLZNxk644buLP1ydXNu-2kn03ZUkoPLHjvy0Eq8/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 90134270,
+          "mode": "list",
+          "cachedResultName": "DAILY OUTREACH",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1iqlfJLZNxk644buLP1ydXNu-2kn03ZUkoPLHjvy0Eq8/edit#gid=90134270"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Handle": "={{ $json.Handle }}",
+            "Message ": "={{ $json['Message '] }}",
+            "Contacted": "NO",
+            "URL": "={{ $json.URL }}"
+          },
+          "matchingColumns": [
+            "Handle"
+          ],
+          "schema": [
+            {
+              "id": "Handle",
+              "displayName": "Handle",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "URL",
+              "displayName": "URL",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Message ",
+              "displayName": "Message ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Contacted",
+              "displayName": "Contacted",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        940,
+        460
+      ],
+      "id": "39df10de-99a9-4e65-8736-794089d09851",
+      "name": "ADD USERS TO DAILY CRM",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "ynWrZD3qiP72GIu9",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Telegram Trigger').item.json.message.chat.id }}",
+        "text": "Leads Have Been Added",
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1160,
+        460
+      ],
+      "id": "5d3e7efa-a411-4fef-9984-00b8417a96fc",
+      "name": "NOTIFICATION",
+      "webhookId": "970b9d49-b4b0-4c1c-b568-291cad8b100a",
+      "executeOnce": true,
+      "credentials": {
+        "telegramApi": {
+          "id": "JkXUgHxEdKAVQYGX",
+          "name": "Test Skool"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Telegram Trigger').item.json.message.chat.id }}",
+        "text": "Leads Have Been Added",
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        4840,
+        -220
+      ],
+      "id": "09f8d51e-c6a8-4966-9a02-0747e03d31f6",
+      "name": "NOTIFICATION 2",
+      "webhookId": "970b9d49-b4b0-4c1c-b568-291cad8b100a",
+      "executeOnce": true,
+      "credentials": {
+        "telegramApi": {
+          "id": "p9uP6RNfDzA6rXE5",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "text": "={{ $('Telegram Trigger').item.json.message.text }}",
+        "attributes": {
+          "attributes": [
+            {
+              "name": "IG",
+              "description": "this is the instagram profile handle"
+            },
+            {
+              "name": "IG link",
+              "description": "this is a link to a profile on instagram"
+            },
+            {
+              "name": "Limit",
+              "description": "this is a limit usually a number eg. 100"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.informationExtractor",
+      "typeVersion": 1,
+      "position": [
+        340,
+        -80
+      ],
+      "id": "c1730e30-246a-4cf8-8a0f-8ffe1cafca0e",
+      "name": "EXTRACT VARIABLES FROM QUERY"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Name: {{ $json.name }}\nInstagram Handle: {{ $json.handle }}\nInstagram Bio: {{ $json.bio }}",
+        "options": {
+          "systemMessage": "You are an AI agent specialized in crafting short, casual, and engaging Instagram direct messages to coaches and consultants. Your goal is to initiate friendly conversations, build rapport, and smoothly transition into potential partnership opportunities.\n\n\nStart with a casual greeting using their first name.\nInclude a brief, genuine compliment or reference related to their Instagram bio or content style.\nAsk a short, engaging question or casually inquire about their coaching, mentorship, or consulting programs to naturally open the conversation.\nKeep the tone informal, friendly, and conversational, using casual language and abbreviations (e.g., \"u\" instead of \"you\") to match typical Instagram messaging style.\nKeep the message concise (1-2 short sentences max).\n\nExamples of ideal outputs:\n\n[Name], love your content, keep it up! Was wondering if u offer any mentorship or coaching programs?\n\nHey [Name], your last reel was super satisfying to watch. How long does it usually take u to create these videos?\n\n[Name], really admire your approach to mindset coaching. Do u currently have spots open in your mentorship?\n\n\nRules:\n- Always output only the message and nothing lese\n- Always use only first name in the messages.\n- Write the First name with the first letter being capital and the rest being small letters\n- Only output the actual messages without the quotes "
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.8,
+      "position": [
+        3800,
+        40
+      ],
+      "id": "7054a609-0e63-4432-a60a-a98cbec4eee1",
+      "name": "WRITE PERSONALISED MESSAGE"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.message.text }}",
+                    "rightValue": "#daily",
+                    "operator": {
+                      "type": "string",
+                      "operation": "notContains"
+                    },
+                    "id": "afa5ad2f-d987-4e3c-8a4c-2487470bd9f2"
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "9104242f-f9cd-4913-8568-a4eb00193a50",
+                    "leftValue": "={{ $json.message.text }}",
+                    "rightValue": "#daily",
+                    "operator": {
+                      "type": "string",
+                      "operation": "contains"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        120,
+        240
+      ],
+      "id": "20dec00c-56ca-4bad-9329-7fd3f127c70e",
+      "name": "CATEGORIZE QUERY"
+    }
+  ],
+  "pinData": {
+    "Telegram Trigger": [
+      {
+        "json": {
+          "update_id": 921619848,
+          "message": {
+            "message_id": 45,
+            "from": {
+              "id": 5119164476,
+              "is_bot": false,
+              "first_name": "Lick",
+              "last_name": "Chu",
+              "username": "nickmacht",
+              "language_code": "de"
+            },
+            "chat": {
+              "id": 5119164476,
+              "first_name": "Lick",
+              "last_name": "Chu",
+              "username": "nickmacht",
+              "type": "private"
+            },
+            "date": 1742993549,
+            "text": "Give me 5000 Leads of craig_percoco"
+          }
+        }
+      }
+    ],
+    "SEND SCRAPING REQUEST TO PARSER.IM": [
+      {
+        "json": {
+          "status": "ok",
+          "tid": "4701322"
+        }
+      }
+    ],
+    "SEND FILTERING REQUEST TO PARSER.IM": [
+      {
+        "json": {
+          "status": "ok",
+          "tid": "4701842"
+        }
+      }
+    ]
+  },
+  "connections": {
+    "When clicking ‘Test workflow’": {
+      "main": [
+        [
+          {
+            "node": "SET VARIABLES",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Telegram": {
+      "main": [
+        [
+          {
+            "node": "CHECK SCRAPING REQUEST STATUS",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Telegram1": {
+      "main": [
+        [
+          {
+            "node": "CREATE FILTERING REQUEST URL",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenRouter Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "WRITE PERSONALISED MESSAGE",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenRouter Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "EXTRACT VARIABLES FROM QUERY",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items": {
+      "main": [
+        [
+          {
+            "node": "ADD PROSPECTS TO CRM",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "WRITE PERSONALISED MESSAGE",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Telegram Trigger": {
+      "main": [
+        [
+          {
+            "node": "CATEGORIZE QUERY",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SET VARIABLES": {
+      "main": [
+        [
+          {
+            "node": "CREATE GET REQUEST URL",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "CREATE GET REQUEST URL": {
+      "main": [
+        [
+          {
+            "node": "SEND SCRAPING REQUEST TO PARSER.IM",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SEND SCRAPING REQUEST TO PARSER.IM": {
+      "main": [
+        [
+          {
+            "node": "Telegram",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "CHECK SCRAPING REQUEST STATUS": {
+      "main": [
+        [
+          {
+            "node": "IF 1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "CREATE FILTERING REQUEST URL": {
+      "main": [
+        [
+          {
+            "node": "SEND FILTERING REQUEST TO PARSER.IM",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SEND FILTERING REQUEST TO PARSER.IM": {
+      "main": [
+        [
+          {
+            "node": "CHECK FILTERING REQUEST STATUS",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "CHECK FILTERING REQUEST STATUS": {
+      "main": [
+        [
+          {
+            "node": "IF 2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GET SCRAPED / FILTERED DAYA FROM PARSER.IM": {
+      "main": [
+        [
+          {
+            "node": "ORGANISE DATA",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "ORGANISE DATA": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "ADD PROSPECTS TO CRM": {
+      "main": [
+        [
+          {
+            "node": "SET LIMIT FOR DAILY CRM PROSPECTS",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "ADD PROSPECTS TO DAILY CRM": {
+      "main": [
+        [
+          {
+            "node": "LIMIT TELEGRAM RESPONSES TO ONE",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SET LIMIT FOR DAILY CRM PROSPECTS": {
+      "main": [
+        [
+          {
+            "node": "ADD PROSPECTS TO DAILY CRM",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "LIMIT TELEGRAM RESPONSES TO ONE": {
+      "main": [
+        [
+          {
+            "node": "NOTIFICATION 2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "WAIT TO AVOID API BURNOUT": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "WAIT FOR REQUEST TO FINISH / RETRY 2": {
+      "main": [
+        [
+          {
+            "node": "CHECK FILTERING REQUEST STATUS",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "WAIT FOR REQUEST TO FINISH / RETRY 1": {
+      "main": [
+        [
+          {
+            "node": "CHECK SCRAPING REQUEST STATUS",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF 1": {
+      "main": [
+        [
+          {
+            "node": "Telegram1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "WAIT FOR REQUEST TO FINISH / RETRY 1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF 2": {
+      "main": [
+        [
+          {
+            "node": "GET SCRAPED / FILTERED DAYA FROM PARSER.IM",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "WAIT FOR REQUEST TO FINISH / RETRY 2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "READ CRM": {
+      "main": [
+        [
+          {
+            "node": "LIMIT FOR HOW MANY USERS TO BE ADDED TO DAILY CRM",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "LIMIT FOR HOW MANY USERS TO BE ADDED TO DAILY CRM": {
+      "main": [
+        [
+          {
+            "node": "ADD USERS TO DAILY CRM",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "ADD USERS TO DAILY CRM": {
+      "main": [
+        [
+          {
+            "node": "NOTIFICATION",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "EXTRACT VARIABLES FROM QUERY": {
+      "main": [
+        [
+          {
+            "node": "SET VARIABLES",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "WRITE PERSONALISED MESSAGE": {
+      "main": [
+        [
+          {
+            "node": "WAIT TO AVOID API BURNOUT",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "CATEGORIZE QUERY": {
+      "main": [
+        [
+          {
+            "node": "EXTRACT VARIABLES FROM QUERY",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "READ CRM",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "df3edbc9-9030-4aca-9084-52d5c88ba795",
+  "meta": {
+    "instanceId": "4b9d43cdd3d57aec7344139eb95d402ebea07428fbeaa3efd9b94043b6cc7413"
+  },
+  "id": "0JnOJYmgGfqVWxJd",
+  "tags": [
+    {
+      "createdAt": "2025-02-04T15:04:12.367Z",
+      "updatedAt": "2025-02-04T15:04:12.367Z",
+      "id": "3h1FTQJfMeV2vFJA",
+      "name": "Yiannis"
+    },
+    {
+      "createdAt": "2025-03-27T07:57:51.977Z",
+      "updatedAt": "2025-03-27T07:57:51.977Z",
+      "id": "VjRB1As6qBf59Pey",
+      "name": "Vas"
+    },
+    {
+      "createdAt": "2025-03-27T07:57:51.938Z",
+      "updatedAt": "2025-03-27T07:57:51.938Z",
+      "id": "X6HR1pBh8HE9TEIb",
+      "name": "Nick"
+    }
+  ]
+}
